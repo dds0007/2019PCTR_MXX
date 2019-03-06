@@ -14,6 +14,7 @@ public class Billiards extends JFrame {
 	public static int Width = 800;
 	public static int Height = 600;
 
+	
 	private JButton b_start, b_stop;
 
 	private Board board;

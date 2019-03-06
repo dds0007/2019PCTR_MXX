@@ -128,6 +128,7 @@ public class Billiards extends JFrame {
 			contaBolas=0;
 		}
 	}
+	
 	public static void main(String[] args) {
 		new Billiards();
 	}

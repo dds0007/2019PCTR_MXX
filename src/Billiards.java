@@ -27,6 +27,7 @@ public class Billiards extends JFrame {
 	private ExecutorService e; //mi ejecutor
 	private int contaBolas=0; //cuenta de cuantas bolas hay creadas
 	
+	
 	public Billiards() {
 
 		board = new Board();
@@ -63,7 +64,12 @@ public class Billiards extends JFrame {
 			balls[i]=new Ball();
 		}
 	}
+	
 
+	/**
+	 * Ejecución del boton empezar.
+	 * 
+	 */
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -80,10 +86,10 @@ public class Billiards extends JFrame {
 	}
 	
 	/**
+	 * Clase que soporta la implementación de cada bola.
 	 * 
 	 * @author Daniel Delgado Santamaria
 	 *
-	 *	Clase que soporta la implementación de cada bola.
 	 */
 	private class Hilo implements Runnable{
 		private Ball mibola;
@@ -110,16 +116,20 @@ public class Billiards extends JFrame {
 		}
 	}
 	
-
+	
+	/**
+	 * Ejecución del boton parar.
+	 *
+	 */
 	private class StopListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Code is executed when stop button is pushed
-
+			e.shutdown();
+			contaBolas=0;
 		}
 	}
-
 	public static void main(String[] args) {
 		new Billiards();
 	}
+
 }

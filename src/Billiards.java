@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SuppressWarnings("serial")
 public class Billiards extends JFrame {
@@ -22,7 +24,9 @@ public class Billiards extends JFrame {
 	// 5 bolas como dijo el profesor
 	private final int N_BALL = 5;
 	private Ball[] balls;
-
+	private ExecutorService e; //mi ejecutor
+	private int contaBolas=0; //cuenta de cuantas bolas hay creadas
+	
 	public Billiards() {
 
 		board = new Board();
@@ -63,10 +67,49 @@ public class Billiards extends JFrame {
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Code is executed when start button is pushed
-
+			e=Executors.newCachedThreadPool();
+			if(contaBolas < N_BALL){
+				for(int i=0;i<N_BALL;i++){
+					e.submit(new Hilo(balls[i]));
+					contaBolas ++;
+				}
+			}else{
+				System.out.println("no se pueden lanzar mas bolas");
+			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @author Daniel Delgado Santamaria
+	 *
+	 *	Clase que soporta la implementación de cada bola.
+	 */
+	private class Hilo implements Runnable{
+		private Ball mibola;
+		
+		public Hilo(Ball bola){
+			mibola=bola;
+		}
+		
+		@Override
+		public void run() {
+			boolean bandera=true;
+			while(bandera){
+				mibola.move();
+				board.setBalls(balls);
+				board.repaint();
+				try {
+					Thread.sleep(1000/60);
+				} catch (InterruptedException e) {
+					bandera=false;
+					System.out.println("Hilo detenido");
+					contaBolas=0;
+				}
+			}
+		}
+	}
+	
 
 	private class StopListener implements ActionListener {
 		@Override

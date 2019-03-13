@@ -125,7 +125,6 @@ public class Billiards extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			e.shutdown();
-			contaBolas=0;
 		}
 	}
 	
